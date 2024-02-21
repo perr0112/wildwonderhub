@@ -1,0 +1,131 @@
+/* variables */
+
+:root {
+    /* colors */
+    --primaryGreen: #4F614B;
+    --primaryGreen-hover: #171f17;
+    --darkenGreen: #364434;
+    --lightGreen: #afd5a7;
+    --primaryBrown: #8D6536;
+    --secondaryBrown: #4F3C26;
+    --secondaryBrown-hover: #36291b;
+    --primaryGray: #544C41;
+    --primaryWhite: #FFFFFF;
+    --primaryWhite-hover: #e8e8e8;
+    --primaryBlack: #000000;
+    --lightBlack: #0000007a;
+    --lightBrown: #c9b8b1;
+    --inputBackground: #D9D9D9;
+    --footerBackground: #ECECEC;
+    --red-color-danger: #e70d0d;
+    --red-color-danger-hover: #c22525;
+    --red-color-admin: #B20000;
+    --red-color-admin-hover: #d50000;
+    --card-hover: rgb(234, 255, 233);
+    --background-container-body: #f3efef;
+    --background-badge-likes: #0500e8;
+
+    /* styles pour les messages */
+
+    --background-message-success: #d4edda;
+    --border-message-success: #c3e6cb;
+    --color-message-success: #155724;
+
+    --background-message-error: #f8d7da;
+    --border-message-error: #f5c6cb;
+    --color-message-error: #721c24;
+
+    --background-message-warning: #fff3cd;
+    --border-message-warning: #ffeeba;
+    --color-message-warning: #856404;
+
+    /* fonts */
+    --main-font-family-text: 'Didact Gothic', 'Inter', sans-serif;
+    --titles-font-family: 'Dangrek', 'Inter', sans-serif;
+    --titles-font-family-secondary: 'Mooli', sans-serif;
+
+    /* font-sizes */
+    --font-size-xl: clamp(20px, 4vw, 32px);
+    --font-size-l: clamp(18px, 4vw, 28px);
+    --font-size-m: clamp(16px, 2vw, 24px);
+    --font-size-s: clamp(14px, 1.8vw, 18px);
+    --font-size-xs: clamp(12px, 2vw, 14px);
+}
+
+img.expanded-state-icon {
+    transform: rotate(180deg);
+}
+
+.card-expand {
+    cursor: pointer;
+}
+
+.list-animals {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.animal-infos {
+}
+
+.animal-infos img {
+    width: 100%;
+}
+
+.animal-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.animal-card:nth-child(odd) {
+    background: var(--lightGreen);
+}
+
+.animal-card:nth-child(even) {
+    background: var(--lightBrown);
+}
+
+.animal-card .animal-card__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.animal-card__content .card__content-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.animal-card__content .card__content-right {
+
+}
+
+.animal-card__infos {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background: var(--primaryWhite);
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.animal-card__infos.hidden {
+    display: none;
+}
+
+
+
+
+
+
+
+
+

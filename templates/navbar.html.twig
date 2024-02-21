@@ -1,0 +1,47 @@
+<header class="header">
+
+    <div class="main-infos">
+        <a href={{path('app_presentation')}}>
+            <img src="{{asset('images/Sae_Zoo_Image/LogoSAE_Zoo.png')}}" class="logo" alt="logo" />
+            Zoo de la Palmyre
+        </a>
+    </div>
+
+    <nav class="ul-links">
+        <div>
+
+            <a href="{{path('app_home')}}" class="menu-link">Accueil</a>
+            <a href="{{path('app_animal')}}" class="menu-link">Liste d'Animaux</a>
+            <a href="{{path('app_events')}}" class="menu-link">Evènements</a>
+
+
+            {% if app.user %}
+                <a href="{{path('app_forum')}}" class="menu-link">Forum</a>
+                <a href="{{path('app_ticket')}}" class="btn button-secondary">Réserver</a>
+                <a href="{{path('app_logout')}}" class="btn button-primary">Se déconnecter</a>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{path('admin')}}" class="btn button-admin">Admin</a>
+                {% endif %}
+
+                <a href="{{path('app_profile')}}" class="menu-link profil">
+                {% if app.user.avatarPathname is not null %}
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.avatarPathname) }}" alt="avatar" class="avatar" />
+                {% else %}
+                    <img src="{{asset('images/icons/profil_icon.svg')}}" alt="icone de profil" />
+                {% endif %}
+                </a>
+            {% else %}
+                <a href="{{path('app_home')}}" class="menu-link">Contact</a>
+                <a href="{{path('app_login')}}" class="btn button-secondary" href={{path('app_login')}}>Se connecter</a>
+                <a href="{{ path('app_register') }}" class="btn button-primary">S'inscrire</a>
+            {% endif %}
+
+        </div>
+    </nav>
+
+    <div id="hamburger-menu">
+        <a class="btn button-primary">Menu</a>
+    </div>
+
+</header>

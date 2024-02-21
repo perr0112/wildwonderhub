@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Créer un nouveau post
+{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('app_user_questions') }}" class="link mbc">
+        <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+        Retour à mes posts
+    </a>
+
+    <div class="question-new">
+
+        <div class="container-question-new">
+            <h1 class="main-title">Créer un nouveau post</h1>
+            <div class="question-new__main-infos mt-50">
+                <h2>Bonjour, {{ user.toString() }}</h2>
+                <p class="new__description">Afin de maximiser vos chances d'obtenir de l'aide,
+                    essayez de décrire au mieux votre problème ou questionnement (n'écrivez pas des centaines de lignes).
+                </p>
+                <p class="new__description">
+                    Lorsque votre post aura trouvé une réponse, pensez à le marquer comme résolu (en vous rendant sur votre post et en cliquant sur "Fermer le post",
+                        <a style="text-decoration: underline" href="{{ path('app_user_questions') }}">ici</a>
+                    ).
+                </p>
+            </div>
+        </div>
+
+        {{ form_start(formQuestion) }}
+
+            {{ form_row(formQuestion.title,
+                {
+                    'label': 'Titre du post'
+                })
+            }}
+
+            {{ form_row(formQuestion.description,
+                {
+                    'label': 'Description du post'
+                })
+            }}
+
+        {{ form_end(formQuestion) }}
+
+    </div>
+
+{% endblock %}
+

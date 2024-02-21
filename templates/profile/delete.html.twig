@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression de votre compte...{% endblock %}
+
+{% block body %}
+    <div class="warning-message">
+        <h3>Souhaitez-vous vraiment supprimer votre compte, {{ user.firstname }}?</h3>
+        <p>Cette action est irréversible...</p>
+
+        {{ form_start(formDelete) }}
+
+            {{ form_widget(formDelete) }}
+
+        {{ form_end(formDelete) }}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.toString() }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/Ticket.css')}}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="profile">
+
+        <div class="intro-profile">
+            <div class="title">
+                <h1 class="main-title green">Votre profil</h1>
+                <p>Bonjour, {{ user.toString() }}</p>
+            </div>
+            {% if app.user.avatarPathname is not null %}
+                <img src="{{ asset('uploads/avatars/' ~ app.user.avatarPathname) }}" alt="avatar" class="avatar">
+            {% endif  %}
+        </div>
+
+        <div class="edit-profile">
+
+            {{ form_start(formChangeAvatar) }}
+
+                {{ form_row(formChangeAvatar.avatar, {'label': 'Ma photo de profil'}) }}
+
+            {{ form_end(formChangeAvatar) }}
+
+            {{ form_start(formChangeInformations) }}
+
+                {{ form_row(formChangeInformations.firstName, {'label': 'Mon prénom'}) }}
+                {{ form_row(formChangeInformations.lastName, {'label': 'Mon nom de famille'}) }}
+                {{ form_row(formChangeInformations.email, {'label': 'Mon email'}) }}
+                {{ form_row(formChangeInformations.phone, {'label': 'Mon numéro de téléphone'}) }}
+                {{ form_row(formChangeInformations.address, {'label': 'Mon adresse'}) }}
+                {{ form_row(formChangeInformations.pc, {'label': 'Mon code postal'}) }}
+                {{ form_row(formChangeInformations.city, {'label': 'Ma ville'}) }}
+
+            {{ form_end(formChangeInformations) }}
+
+            {{ form_start(formChangePassword) }}
+
+                {{ form_row(formChangePassword.currentPassword, {'label': 'Mot de passe actuel'}) }}
+                {{ form_row(formChangePassword.newPassword.first, {'label': 'Nouveau mot de passe'}) }}
+                {{ form_row(formChangePassword.newPassword.second, {'label': 'Nouveau mot de passe'}) }}
+
+            {{ form_end(formChangePassword) }}
+
+            <div class="btn-actions">
+                <a class="btn button-primary" href="{{ path('app_profile_delete') }}">Supprimer mon compte</a>
+                <a class="btn button-secondary" href="{{ path('app_logout') }}">Me déconnecter</a>
+            </div>
+
+        </div>
+
+        <div class="tickets-container mt-50 mb-100">
+            <h3>Vos derniers tickets</h3>
+            <div class="last-tickets">
+                {% if tickets|length > 0 %}
+                    {% for ticket in tickets %}
+                        {{ include('components/ticket.html.twig', {
+                            'ticket': ticket,
+                            'available': ticket.date > 'now'|date('Y-m-d'),
+                        }) }}
+                    {% endfor %}
+                {% else %}
+                    <p>Vous n'avez pas encore réservé dans notre Zoo,
+                        <span class="keyword">n'attendez plus et réservez maintenant</span>
+                        !
+                    </p>
+                {% endif %}
+            </div>
+            <div class="tickets-infos mt-50">
+                <p class="tickets-infos__text" style="text-align: center;">
+                    Vous avez déjà eu l'occasion de découvrir notre Zoo ?
+                    <br />
+                    Nous vous invitons à rechercher un événement qui pourrait vous plaire à nouveau et réserver votre ou vos places !
+                    <br />
+                </p>
+                <div class="buttons-cta mt-50">
+                    <a href="{{ path('app_events') }}" class="btn button-primary">
+                        Regarder les prochains événements...
+                    </a>
+                    <a href="{{ path('app_ticket') }}" class="btn button-secondary">
+                        Je souhaite réserver !
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

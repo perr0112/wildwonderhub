@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('app_forum') }}" class="link mbc">
+        <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+        Retour au forum
+    </a>
+    <h1 class="main-title green mt-50 mb-50">Vos derniers posts</h1>
+    <a href="{{ path('app_question_new') }}" class="link mbc">
+        Créer un post
+    </a>
+    <div class="questions-user">
+        {% if ownQuestions is empty %}
+            <p>Vous n'avez pas encore créé de questions.</p>
+        {% else %}
+            <div class="questions-container">
+                {% for ownQuestion in ownQuestions %}
+                    <div class="question">
+                        {% if ownQuestion.isResolved %}
+                            <div>
+                                <p class="question-state">Question résolue</p>
+                                <img src="{{ asset('images/icons/check_icon.svg') }}" alt="checked" class="basic-icon checked-icon" />
+                            </div>
+                        {% else %}
+                            <p class="question-state">Question non résolue</p>
+                        {% endif %}
+                        <div class="question__main-infos">
+                            <h5 class="question__title">{{ ownQuestion.title|u.truncate(30, '...') }}</h5>
+                            <p class="date-creation">Question créée le {{ ownQuestion.createdAt|date('d/m/Y') }}</p>
+                        </div>
+                        <a href="{{ path('app_question_show', {'id': ownQuestion.id }) }}" class="btn button-primary">
+                            Accéder au post
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

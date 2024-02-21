@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Édition de la réponse de {{ answer.author.ToString() }}
+{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('app_question_show', {'id': answer.question.id}) }}" class="link mbc">
+        <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+        Retour
+    </a>
+
+    <h1 class="main-title mt-50 mb-50">Modification de la réponse de {{ answer.author.ToString() }}</h1>
+
+    {{ form_start(formEdit) }}
+        {{ form_widget(formEdit) }}
+    {{ form_end(formEdit) }}
+
+    {{ include('components/modal.html.twig', {
+        form: formDelete,
+        modalQuestion: 'Êtes-vous sûr de vouloir supprimer cette réponse?',
+        modalAction: 'Supprimer',
+        fullWidth: true
+    }) }}
+
+{% endblock %}

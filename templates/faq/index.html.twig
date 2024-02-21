@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block body %}
+    <h1 class="main-title green">Forum du Zoo de la Palmyre</h1>
+    <p class="center mt-50 mb-50">
+        Bienvenue sur le forum de notre Zoo ! Ici, vous pouvez poser toutes vos questions sur les animaux, les horaires, les tarifs, etc.
+        <br />
+        Vous pouvez également répondre aux questions des autres utilisateurs, et même liker les posts qui vous plaisent pour les mettre en avant.
+        <br />
+        Vous avez donc accès à vos posts et à vos posts favoris.
+        <br />
+        <br />
+        Merci de respecter nos règles de bonne conduite.
+    </p>
+
+    {% if app.user.isAdmin or app.user.isEmployee %}
+
+        <p class="admin-or-employee-only">
+            Bonjour, {{ app.user.toString() }}, vous êtes un administrateur ou employé de notre Zoo.
+            <br />
+            Par conséquent, vous avez la possibilité de supprimer un post, de le modifier, de le rendre résolu ou non.
+            <br />
+            Vous pouvez également supprimer ou modifier un commentaire qui pourrait être offensant, ou non approprié.
+        </p>
+
+    {% endif %}
+
+    <a href="{{ path('app_user_questions') }}" class="link mbc">
+        Voir mes posts
+    </a>
+
+    <a href="{{ path('app_question_new') }}" class="link mbc">
+        Créer un post
+    </a>
+
+    <a href="{{ path('app_question_liked') }}" class="link mbc">
+        Vos posts aimés
+    </a>
+
+    <div class="faq-container">
+        <h2 class="second-title mt-50 mb-50">Les posts les plus récents (page {{ pagination.currentPageNumber }})</h2>
+
+        <form action="{{ path('app_forum') }}" method="GET">
+            <div>
+                <label for="search">Rechercher un post</label>
+                <input type="text" name="search" id="search" placeholder="Saisissez un mot clé..." value={{ search }}>
+                <button class="btn button-primary" type="submit">Rechercher</button>
+            </div>
+        </form>
+
+        {% if search %}
+            <p class="mt-50">Résultats de la recherche pour <strong>{{ search }}</strong></p>
+            {% if pagination.totalItemCount == 0 %}
+                <p>Votre recherche n'a donné aucun résultat !</p>
+            {% endif %}
+        {% endif %}
+
+        <div class="questions-container">
+        {% for question in pagination %}
+            <div class="card-question">
+                <a href="{{ path('app_question_show', {'id': question.id }) }}" class="question-link link-hidden"></a>
+                <div class="card-question__mains-infos">
+                    <div class="question-title">
+                        <h5 class="question__title">{{ question.title|u.truncate(30, '...') }}</h5>
+                        <div class="data-answers">
+                            <span>
+                                <img src="{{ asset('images/icons/message_icon.svg') }}" alt="msg-icon" class="basic-icon msg-icon" />
+                                {{ question.countAnswers }}
+                            </span>
+                            {% if question.isResolved %}
+                                <img src="{{ asset('images/icons/check_icon.svg') }}" alt="checked" class="basic-icon checked-icon" />
+                            {% else %}
+                                <a class="btn button-tertiary cursor-not-allowed">
+                                    Non-résolu
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="question__author">
+                        <div class="author">
+                            {% if question.author.avatarPathname is not null %}
+                                <img src="{{ asset('uploads/avatars/' ~ question.author.avatarPathname) }}" alt="avatar" class="avatar">
+                            {% else %}
+                                <img src="{{asset('images/icons/profil_icon.svg')}}" alt="icone de profil" class="avatar" />
+                            {% endif %}
+                            <p class="author">{{ question.author.toString() }}</p>
+                        </div>
+                        <div class="question-dates">
+                            {% if question.updatedAt %}
+                                <p class="date-creation">Dernière réponse le {{ question.updatedAt|date('d/m/Y H:i') }}</p>
+                            {% endif %}
+                            <p class="date-creation">Post créé le {{ question.createdAt|date('d/m/Y') }}</p>
+                        </div>
+                        <span class="badge badge-likes">
+                                {{ question.countLikes }}
+                                <img src="{{ asset('images/icons/like_icon.svg') }}" alt="like icon" class="basic-icon like-icon" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        {{ include('components/pagination.html.twig', { 'pagination': pagination, 'path': 'app_forum' }) }}
+
+    </div>
+
+{% endblock %}

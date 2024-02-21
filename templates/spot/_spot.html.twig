@@ -1,0 +1,9 @@
+<h1>Les Zones du Zoo</h1>
+<div class="allcartespot">
+    {% for spot in spots %}
+        <div class="cartespot">
+            <img src="{{ asset('images/img-spot/' ~ spot.name ~ '.jpg') }}" class="img-spot" alt="img-spot">
+            <li>{{ spot.name }}</li>
+        </div>
+    {% endfor %}
+</div>

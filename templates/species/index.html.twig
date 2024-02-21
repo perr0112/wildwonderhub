@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Species{% endblock %}
+
+{% block body %}
+<h1>Listes des Espèces</h1>
+    <form action="{{ path('app_species') }}" method="GET">
+        <div>
+            <label for="search">Rechercher une espèce</label>
+            <input type="text" name="search" id="search" placeholder="Saisissez un mot clé..." value={{ search }}>
+            <button class="btn button-primary" type="submit">Rechercher</button>
+        </div>
+    </form>
+<div class="specieslist">
+    {% for specie in species %}
+    <div class="cartespecies">
+        <dt>{{ specie.name }}</dt>
+        <dd>Description : {{ specie.description }}</dd>
+    </div>
+    {% endfor %}
+    <div class="button_for_list">
+        <a class="button_list" href="{{path('app_family')}}">Liste des familles</a>
+        <a class="button_list" href="{{path('app_animal')}}">Liste des animaux</a>
+    </div>
+</div>
+{% endblock %}

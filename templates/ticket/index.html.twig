@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos tickets{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/Ticket.css')}}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="main-title green mt-50 mb-100">Liste de vos tickets achetés</h1>
+
+    <div class="tickets-infos">
+        <h3>Bonjour, {{ app.user.toString }}!</h3>
+        <p class="tickets-infos__text mt-50">
+            Vous pouvez consulter ici vos tickets prévus prochainement et votre historique.
+            <br />
+            Vous pouvez également réserver un nouveau ticket, alors <span class="keyword">n'attendez plus</span> !
+            <br />
+            <a href="#réserver" class="btn button-secondary">Je souhaite réserver !</a>
+            Explorez les détails de vos prochaines aventures au zoo et découvrez les événements passionnants qui vous attendent.
+            <br />
+            Que ce soit pour une visite spéciale, une rencontre avec les animaux ou une journée thématique, nous avons une expérience unique qui vous attend !
+            <br />
+            Profitez d'une journée mémorable parmi nos habitants exotiques et vivez des moments inoubliables seul(e), en famille ou entre amis.
+        </p>
+    </div>
+
+    <div class="tickets-container mt-50">
+        <h3>Vos entrées prévues prochainement ({{ availableTickets|length }})</h3>
+        <div class="tickets-future">
+            {% for ticket in availableTickets %}
+                {{ include('components/ticket.html.twig', {
+                    'ticket': ticket,
+                    'available': false,
+                }) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="tickets-container">
+        <h3>Votre historique de tickets ({{ pastTickets|length }})</h3>
+        <div class="tickets-past mt-50">
+            {% for ticket in pastTickets %}
+                {{ include('components/ticket.html.twig', {
+                    'ticket': ticket,
+                    'available': true,
+                }) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="line line-mbc"></div>
+
+    <div class="form-ticket-add" id="réserver">
+        <h3 class="mb-50">Je souhaite acheter un nouveau ticket !</h3>
+
+        <p class="tickets-infos__text">Nos tickets diffèrent en fonction du type de propriétaire du ticket. <br />
+        Vous pouvez acheter un ticket pour vous-même ou pour un membre de votre famille, sans compte.</p>
+        <p class="tickets-infos__text mt-50" style="text-decoration: underline;">Les tarifs sont les suivants :</p>
+        <ul class="mb-50 tickets-infos__text">
+            <li>- Tarif classique : 20€</li>
+            <li>- Tarif pour junior (-3 ans) : gratuit</li>
+            <li>- Tarif pour enfant (3-12 ans) : 12€</li>
+            <li>- Tarif pour senior : 16€</li>
+            <li>- Tarif pour étudiants : 15€</li>
+            <li>- Tarif pour personne en situation de handicap : 14€</li>
+        </ul>
+
+        {#
+    {{ form_start(form, {'method': 'GET'}) }}
+        <div id="inter-flex">
+        <h5>Selectioner la date d'application de votre ticket</h5>
+        {{ form_row(form.date)}}
+        </div>
+
+        <div id="inter-flex">
+        <h5>Selectionner votre type de forfait</h5>
+        {{ form_row(form.type) }}
+        <i> * Type de forfait { Normal = 20 € / Enfant = 12 € / Etudient = 15€ / Senior = 16 € / Junior = Gratuit / Handicape = 14 €</i>
+    </div>
+    {{ form_end(form) }}
+
+    </div>
+    #}
+
+        {{ form_start(form) }}
+            {{ form_row(form.date)}}
+        {{ form_end(form) }}
+
+    </div>
+
+
+{% endblock %}

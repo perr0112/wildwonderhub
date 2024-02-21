@@ -1,0 +1,10 @@
+{#
+video: video
+controls: boolean
+#}
+
+<div class="video">
+    <div class="top-video"></div>
+    <video src="{{ video }}" autoplay loop muted {{ controls ? 'controls' : '' }}></video>
+    <p>{{ label }}</p>
+</div>

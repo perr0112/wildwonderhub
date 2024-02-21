@@ -1,0 +1,22 @@
+{#
+form: form,
+fullWidth: boolean,
+modalAction: string (title),
+modalQuestion: string (question)
+#}
+
+<div class="modal-delete">
+    <button class="btn button-danger open-modal mt-50 {{ fullWidth ? 'full-width' : '' }}">
+        {{ modalAction }}
+    </button>
+    <div class="modal-form">
+        <div class="modal-form__content">
+            <h5>{{ modalQuestion }}</h5>
+            <div>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

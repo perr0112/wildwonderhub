@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Post - {{ question.title }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="btn-actions-question">
+        <a href="{{ path('app_forum') }}" class="link mbc">
+            <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+            Retour au forum</a>
+
+        {% if app.user == question.author or app.user.isAdmin or app.user.isEmployee %}
+            <a href="{{ path('app_question_edit', {'id': question.id}) }}">
+                <img src="{{ asset('images/icons/edit_icon.svg') }}" alt="edit icon" class="basic-icon edit-icon" />
+                Modifier
+            </a>
+        {% endif %}
+    </div>
+    <div class="show-question">
+        <div class="data-question">
+            <div class="question-main__informations">
+                <h2>{{ question.title }}</h2>
+                <div class="question-state">
+                    {% if app.user == question.author or app.user.isAdmin or app.user.isEmployee %}
+                        {{ form_start(formSetResolved) }}
+
+                            {{ form_row(formSetResolved.submit,
+                                {
+                                    'label': question.isResolved ? 'Réouvrir le post' : 'Fermer le post',
+                                })
+                            }}
+
+                        {{ form_end(formSetResolved) }}
+                    {% endif %}
+                    <span class="badge badge-resolved">
+                        Post {{ question.isResolved ? 'fermé' : 'ouvert' }}
+                    </span>
+                </div>
+            </div>
+            <div class="author">
+                {% if question.author.avatarPathname is not null %}
+                    <img src="{{ asset('uploads/avatars/' ~ question.author.avatarPathname) }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{{asset('images/icons/profil_icon.svg')}}" alt="icone de profil" class="avatar" />
+                {% endif %}
+
+                <p class="author">{{ question.author.toString() }}</p>
+
+                {% if question.author.isAdmin() %}
+                    <span class="badge badge-admin">
+                        Admin
+                    </span>
+                {% endif %}
+                {% if question.author.isEmployee() %}
+                    <span class="badge badge-employee">
+                        Employé
+                    </span>
+                {% endif %}
+            </div>
+            <p class="date-creation">Post créé le {{ question.createdAt|date('d/m/y H:i') }}</p>
+        </div>
+        <p class="question__description">{{ question.description }}</p>
+
+        <p class="question__total-likes">
+            {% if question.countLikes > 0 %}
+                <span class="badge badge-likes">
+                    {{ question.countLikes }}
+                    <img src="{{ asset('images/icons/like_icon.svg') }}" alt="like icon" class="basic-icon like-icon" />
+                </span>
+            {% else %}
+                Ce post n'a pas été liké.
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="question-answers-container mt-50">
+        <div class="count-answers">
+            <h3>
+                {{ answersLength > 1 ? answersLength ~ ' réponses' : answersLength ~ ' réponse' }}
+            </h3>
+            <div class="line"></div>
+        </div>
+    {% for answer in answers %}
+        <div class="answer">
+            <div class="answer__informations">
+                <div class="author">
+                    {% if answer.author.avatarPathname is not null %}
+                        <img src="{{ asset('uploads/avatars/' ~ answer.author.avatarPathname) }}" alt="avatar" class="avatar">
+                    {% else %}
+                        <img src="{{asset('images/icons/profil_icon.svg')}}" alt="icone de profil" class="avatar" />
+                    {% endif %}
+                    <p class="author">{{ answer.author.firstname }} {{ answer.author.lastname }} - {{ answer.createdAt|date('d/m/y H:i') }}</p>
+                    {% if answer.author == question.author %}
+                        <span class="badge badge-author">
+                            Auteur
+                        </span>
+                    {% endif %}
+                    {% if answer.author.isAdmin() %}
+                        <span class="badge badge-admin">
+                            Admin
+                        </span>
+                    {% endif %}
+                    {% if answer.author.isEmployee() %}
+                        <span class="badge badge-employee">
+                            Employé
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="answer-description">
+                <p class="text">{{ answer.description }}</p>
+                    {% if answer.author == user or user.isAdmin or user.isEmployee %}
+                        {{ include('components/dropdown.html.twig' ,
+                            {
+                                'actions': [
+                                    {
+                                        'label': 'Modifier',
+                                        'path': path('app_answer_edit', {'id': answer.id})
+                                    }
+                                ],
+                            }
+                        ) }}
+                    {% endif %}
+                {% if answer.updatedAt is not null %}
+                    <p class="update">Modifié le {{ answer.updatedAt|date('d/m/y H:i') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="question-interaction">
+        {% if question.isResolved %}
+
+            <div class="interaction-question__resolved mt-50">
+                <h5>Ce post est résolu, vous pouvez <a class="link" href="{{ path('app_question_new') }}">créer un nouveau post</a> si vous en avez besoin.</h5>
+            </div>
+
+        {% else %}
+            <div class="reply mt-50 full-width">
+
+                {{ form_start(formAnswer) }}
+
+                    {{ form_row(formAnswer.description, {'label': 'Votre réponse', 'attr': {'class': 'form-control'}}) }}
+
+                {{ form_end(formAnswer) }}
+
+            </div>
+
+        {% endif %}
+
+        <div class="interaction-question__like">
+            <h5 class="mt-50">Est-ce-que ce post vous a été utile ?</h5>
+            {% if question.isLikedByUser(user) %}
+                <p>Vous avez aimé ce post.</p>
+                <a href="{{ path('app_question_like', { 'id': question.id }) }}" class="btn button-primary mbc">
+                    <img src="{{ asset('images/icons/unlike_icon.svg') }}" alt="like icon" class="basic-icon like-icon" />
+                    Je n'aime plus
+                </a>
+            {% else %}
+                <a href="{{ path('app_question_like', { 'id': question.id }) }}" class="btn button-primary mbc">
+                    <img src="{{ asset('images/icons/like_icon.svg') }}" alt="unlike icon" class="basic-icon unlike-icon" />
+                    J'aime ce post</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

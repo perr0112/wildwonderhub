@@ -1,0 +1,69 @@
+{#
+pagination: knppaginator,
+path: path to the route
+#}
+
+{% set result = pagination.totalItemCount / pagination.itemNumberPerPage %}
+{% set roundedResult = result|round(0, 'ceil') %}
+{% set numberPagesDisplayed = 2 %}
+
+<div class="pagination">
+
+    {% if pagination.totalItemCount > pagination.itemNumberPerPage %}
+
+        {% if pagination.currentPageNumber > 1 %}
+            <a href="{{ path(path, {'page': 1, 'search': app.request.query.get('search')}) }}" class="btn-pagination link-first">
+                <<
+            </a>
+        {% else %}
+            <a class="btn-pagination link-first disabled cursor-not-allowed">
+                <<
+            </a>
+        {% endif %}
+
+        <div class="pagination-data">
+            <a href="{{ path(path, {'page': 1, 'search': app.request.query.get('search')}) }}"
+               class="btn-pagination link-page {{ pagination.currentPageNumber == 1 ? 'pagination-actual-number' : '' }}"
+            >1</a>
+
+            {% if (pagination.currentPageNumber - numberPagesDisplayed) - 1 > 1 %}
+                <span class="btn-pagination indicator">...</span>
+            {% endif %}
+
+            {% for i in (pagination.currentPageNumber - numberPagesDisplayed)..(pagination.currentPageNumber+numberPagesDisplayed) %}
+                {% if i > 1 and i <= roundedResult - 1 %}
+                    {% if pagination.currentPageNumber == i %}
+                        <span class=
+                              "btn-pagination pagination-actual-number"
+                        >
+                            {{ i }}</span>
+                    {% else %}
+                        <a href="{{ path(path, {'page': i, 'search': app.request.query.get('search')}) }}"
+                           class="btn-pagination link-page"
+                        >{{ i }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if (pagination.currentPageNumber + numberPagesDisplayed) < roundedResult - 1 %}
+                <span class="btn-pagination indicator">...</span>
+            {% endif %}
+
+            <a href="{{ path(path, {'page': roundedResult, 'search': app.request.query.get('search')}) }}"
+               class="btn-pagination link-page {{ pagination.currentPageNumber == roundedResult ? 'pagination-actual-number' : '' }}"
+            >{{ roundedResult }}</a>
+        </div>
+
+        {% if pagination.currentPageNumber != roundedResult %}
+            <a href="{{ path(path, {'page': roundedResult, 'search': app.request.query.get('search')}) }}" class="btn-pagination link-last">
+                >>
+            </a>
+        {% else %}
+            <a class="btn-pagination link-last disabled cursor-not-allowed">
+                >>
+            </a>
+        {% endif %}
+
+    {% endif %}
+
+</div>

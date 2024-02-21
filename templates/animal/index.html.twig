@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les animaux de notre Zoo{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/animals.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('scripts/toggleCard.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+    <div class="animal-infos">
+        <h1 class="main-title green mt-50 mb-50">
+            Les animaux de notre zoo
+        </h1>
+        <img src="{{ asset('images/img-animaux/zoo-2.png') }}" alt="img animal" />
+        <p class="presentation-pratical-infos__text mt-50 center">
+            Ici, vous pouvez retrouver tous les animaux de notre zoo.
+            <br />
+            Vous pouvez également consulter la liste des familles et des espèces.
+            <br />
+            <br />
+            Pour chaque animal, vous pouvez consulter sa fiche détaillée en cliquant dessus.
+            <br />
+            Vous pouvez également rechercher un animal par son nom !
+        </p>
+    </div>
+
+    <div class="line line-mbc"></div>
+
+    <form class="mb-50" action="{{ path('app_animal') }}" method="GET">
+        <div>
+            <label for="search">Rechercher un animal</label>
+            <input type="text" name="search" id="search" placeholder="Saisissez un mot clé..." value={{ search }}>
+            <button class="btn button-primary" type="submit">Rechercher</button>
+        </div>
+    </form>
+
+    <div class="list-animals">
+
+        {% for animal in animals %}
+            {{ include('components/animal_card.html.twig', {
+                'animal': animal,
+                'first': animal.id == animals[0].id
+            }) }}
+        {% endfor %}
+
+    </div>
+
+    <div class="button_for_list">
+        <a class="btn button-primary" href="{{path('app_family')}}">Liste des familles</a>
+        <a class="btn button-secondary" href="{{path('app_species')}}">Liste des espèces</a>
+    </div>
+
+{% endblock %}

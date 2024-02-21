@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{event.name}}{% endblock %}
+
+{% block body %}
+    <div class="event-detail">
+        <h1 class="main-title mt-50 mb-50 green">{{ event.name }}</h1>
+        <p>{{ event.description }}</p>
+        <p>Nombre de places : {{ event.maxiNumPlace }}</p>
+        <p>Le {{ event.date|date("d/m/y") ? event.date|date("d/m/y") : 'Aujourd"hui' }} </p>
+        <p>Heure de début : {{ event.hstart ? event.hstart : '12:00' }} </p>
+        <p>Heure de fin : {{ event.hend ? event.hend : '14:00' }} </p>
+    </div>
+
+    <button class="btn button-primary">Je participe</button>
+{% endblock %}

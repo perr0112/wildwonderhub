@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Vos posts favoris
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="main-title">Vos posts favoris</h1>
+
+    {% if totalLiked > 0 %}
+        <p class="center mt-50">Vous avez aimé {{ totalLiked > 1 ? totalLiked ~ ' posts' : totalLiked ~ ' post' }}</p>
+        <div class="questions-user">
+            <div class="questions-container">
+                {% for question in pagination %}
+                    <div class="question">
+                        {% if question.isResolved %}
+                            <div>
+                                <p class="question-state">Question résolue</p>
+                                <img src="{{ asset('images/icons/check_icon.svg') }}" alt="checked" class="basic-icon checked-icon" />
+                            </div>
+                        {% else %}
+                            <p class="question-state">Question non résolue</p>
+                        {% endif %}
+                        <div class="question__main-infos">
+                            <h5 class="question__title">{{ question.title|u.truncate(30, '...') }}</h5>
+                            <p class="date-creation">Question créée le {{ question.createdAt|date('d/m/Y') }}</p>
+                        </div>
+                        <a href="{{ path('app_question_show', {'id': question.id }) }}" class="btn button-primary">
+                            Accéder au post
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="center mt-50">Vous n'avez pas encore liké de post, n'hésitez pas à consulter notre forum
+                <a class="link" href="{{ path('app_forum') }}">ici</a>
+        !</p>
+    {% endif %}
+
+    {{ include('components/pagination.html.twig', { 'pagination': pagination, 'path': 'app_question_liked' }) }}
+
+{% endblock %}

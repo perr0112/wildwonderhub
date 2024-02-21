@@ -1,0 +1,27 @@
+{#
+animal: Animal
+#}
+
+<div class="card-component animal-card">
+    <div class="card-expand animal-card__content">
+        <div class="card__content-left">
+            <img src="{{ asset('images/icons/paw-filled_icon.svg') }}" alt="icon" class="basic-icon responsive-icon" />
+            <h3>{{ animal.name }}</h3>
+        </div>
+        <div class="card__content-right">
+            <img src="{{ asset('images/icons/arrow-state_icon.svg') }}" alt="icon" class="basic-icon responsive-icon expanded-state-icon" style="{{ first ? 'transform: rotate(0deg);' : '' }}" />
+        </div>
+    </div>
+    <div class="animal-card__infos card-content-expanded {{ first ? '' : 'hidden' }}">
+        <ul class="infos-list">
+            <li><span class="keyword">Genre</span> : {{ animal.gender }}</li>
+            <li><span class="keyword">Description</span> : {{ animal.description }}</li>
+            <li><span class="keyword">Poids</span> : {{ animal.weight }} g</li>
+            <li><span class="keyword">Taille</span> : {{ animal.size }} cm</li>
+            <li><span class="keyword">Zone</span> : {{ animal.pen.id }}</li>
+        </ul>
+        <a href="" class="btn button-secondary full-width" style="display: block;">
+            Voir l'emplacement de {{ animal.name }}
+        </a>
+    </div>
+</div>

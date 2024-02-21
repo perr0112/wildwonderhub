@@ -1,0 +1,14 @@
+{#
+action = {path, label}
+#}
+
+<div class="settings-action">
+    <div class="settings-action__dropdown-btn">
+        <img src="{{ asset('images/icons/settings_icon.svg') }}" alt="settings icon" class="responsive-icon settings-icon" />
+    </div>
+    <div class="dropdown-menu">
+        {% for action in actions %}
+            <a class="dropdown-menu__links" href="{{ action.path }}">{{ action.label }}</a>
+        {% endfor %}
+    </div>
+</div>

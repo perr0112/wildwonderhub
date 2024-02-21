@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{% block title %}Bienvenue!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        
+        <link rel="stylesheet" href="{{ asset('css/base.css')}}" type="text/css">
+
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('scripts/menuHeader.js')}}" defer></script>
+            <script src="{{ asset('scripts/toggleModal.js')}}" defer></script>
+            <script src="{{ asset('scripts/dropdownMenu.js')}}" defer></script>
+        {% endblock %}
+
+    </head>
+    
+    <body>
+
+        {{ include('navbar.html.twig') }}
+
+        <div {% if app.request.attributes.get('_route') != 'app_presentation' %}
+                class="content"
+                {% else %}
+                    class="homepage"
+            {% endif %}>
+            <div class="container-body-infos">
+
+                    <!-- message affiché dans le cas d'un succès sur un formulaire -->
+
+                    {% for message in app.flashes('success') %}
+                        <p class="message message-success mb-50">{{ message }}</p>
+                    {% endfor %}
+
+                    <!-- message affiché dans le cas d'une erreur sur un formulaire -->
+
+                    {% for message in app.flashes('error') %}
+                        <p class="message message-error mb-50">{{ message }}</p>
+                    {% endfor %}
+
+                    <!-- message affiché dans le cas d'une information importante -->
+
+                    {% for message in app.flashes('warning') %}
+                        <p class="message message-warning mb-50">{{ message }}</p>
+                    {% endfor %}
+
+                    {% block body %}{% endblock %}
+            </div>
+        </div>
+
+        {{ include('footer.html.twig') }}
+
+    </body>
+
+</html>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Recapitulatif du Ticket N°{{ ticket. id }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/Ticket.css')}}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('app_ticket')}}" class="link mbc">
+        <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+        Retour
+    </a>
+
+    <h1>Recapitulatiof de votre ticket N°{{ ticket. id }} </h1>
+
+<div class="repeat-ticket">
+            <h5>
+                <br/>
+             Numero de ticket: N° {{ ticket.id}}  <br/>
+             Prix de ticket:  {{ ticket.price}} € <br/>
+            Type de ticket : {{ ticket.type}} <br/>
+             Proprietaire ticket: {{ user.lastname }} {{ user.firstname }} <br/>
+            </h5>
+
+</div>
+
+
+{% endblock %}

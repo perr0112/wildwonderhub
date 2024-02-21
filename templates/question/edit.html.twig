@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Édition de votre post
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <h1 class="main-title">Édition du post</h1>
+
+        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="link mbc">
+            <img src="{{ asset('images/icons/back_icon.svg') }}" alt="back icon" class="basic-icon back-icon" />
+            Retour
+        </a>
+
+        <div class="mt-50">
+            {{ form_start(formEdit) }}
+
+                {{ form_row(formEdit.title,
+                    {
+                        'label': 'Titre du post'
+                    })
+                }}
+
+                {{ form_row(formEdit.description,
+                    {
+                        'label': 'Description du post'
+                    })
+                }}
+
+            {{ form_end(formEdit) }}
+
+            {#
+            {{ form_start(formDelete) }}
+
+                {{ form_widget(formDelete) }}
+
+            {{ form_end(formDelete) }}
+            #}
+
+            {{ include('components/modal.html.twig', {
+                form: formDelete,
+                modalQuestion: 'Êtes-vous sûr de vouloir supprimer ce post?',
+                modalAction: 'Supprimer',
+                fullWidth: true
+            }) }}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+

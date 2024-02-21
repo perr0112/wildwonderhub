@@ -1,0 +1,13 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+
+    <h1 class="main-title">
+        <img src="{{ asset('images/Sae_Zoo_Image/LogoSAE_Zoo.png') }}" alt="logo" style="width: 50px; height: 50px;" />
+        Bonjour, {{ app.user.toString() }}.
+    </h1>
+    <h3>Bienvenue sur le panel administratif du Zoo de la Palmyre !</h3>
+    <br />
+    <h5>Vous pouvez retourner à l'accueil <a class="link" href="{{ path('app_presentation') }}">ici</a>.</h5>
+
+{% endblock %}
