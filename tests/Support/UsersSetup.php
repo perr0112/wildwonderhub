@@ -20,7 +20,7 @@ trait UsersSetup
 
         $userAdmin = UserFactory::createOne([
             'firstname' => 'Clément',
-            'lastname' => 'Perrot',
+            'lastname' => 'Admin',
             'email' => $uniqueEmailAdmin,
             'password' => 'test',
             'roles' => ['ROLE_ADMIN'],
@@ -30,7 +30,7 @@ trait UsersSetup
 
         $userBasic = UserFactory::createOne([
             'firstname' => 'Clément',
-            'lastname' => 'Perrot',
+            'lastname' => 'Admin',
             'email' => $uniqueEmailBasic,
             'password' => 'test',
             'roles' => ['ROLE_USER'],

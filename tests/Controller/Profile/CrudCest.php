@@ -19,7 +19,6 @@ class CrudCest
     {
         // connecté en tant que userBasic
         /* 'firstname' => 'Clément',
-            'lastname' => 'Perrot',
             'email' => $uniqueEmailBasic,
             'password' => 'test',
             'roles' => ['ROLE_USER'], */
@@ -52,7 +51,6 @@ class CrudCest
     {
         // connecté en tant que userBasic
         /* 'firstname' => 'Clément',
-            'lastname' => 'Perrot',
             'email' => $uniqueEmailBasic,
             'password' => 'test',
             'roles' => ['ROLE_USER'], */
@@ -74,7 +72,6 @@ class CrudCest
     {
         // connecté en tant que userBasic
         /* 'firstname' => 'Clément',
-            'lastname' => 'Perrot',
             'email' => $uniqueEmailBasic,
             'password' => 'test',
             'roles' => ['ROLE_USER'], */

@@ -18,7 +18,7 @@ WildWonderHub est une application de gestion des visiteurs et des animaux du Zoo
 - Logan Jacotin
 - Romain Leroy
 - Vincent Kpatinde
-- Clément Perrot
+- Clément
 
 ## Outils utilisés
 
